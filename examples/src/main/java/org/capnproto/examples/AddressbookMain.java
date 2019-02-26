@@ -24,6 +24,7 @@ package org.capnproto.examples;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.FileDescriptor;
+import java.io.File;
 
 import org.capnproto.StructList;
 import org.capnproto.examples.Addressbook.AddressBook;
@@ -32,6 +33,15 @@ import org.capnproto.examples.Addressbook.Person;
 public class AddressbookMain {
 
     public static void writeAddressBook() throws java.io.IOException {
+
+        final String file_name = "Example_capnp.enc";
+
+        File file = new File(file_name);
+
+        if (!file.exists()) {
+                file.createNewFile();
+        }
+
         org.capnproto.MessageBuilder message = new org.capnproto.MessageBuilder();
         AddressBook.Builder addressbook = message.initRoot(AddressBook.factory);
         StructList.Builder<Person.Builder> people = addressbook.initPeople(2);
@@ -57,8 +67,12 @@ public class AddressbookMain {
         bobPhones.get(1).setType(Person.PhoneNumber.Type.WORK);
         bob.getEmployment().setUnemployed(org.capnproto.Void.VOID);
 
+        // org.capnproto.SerializePacked.writeToUnbuffered(
+        //     (new FileOutputStream(FileDescriptor.out)).getChannel(),
+        //     message);
+
         org.capnproto.SerializePacked.writeToUnbuffered(
-            (new FileOutputStream(FileDescriptor.out)).getChannel(),
+            (new FileOutputStream(file)).getChannel(),
             message);
     }
 

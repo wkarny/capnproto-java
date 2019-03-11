@@ -54,18 +54,18 @@ public class AddressbookMain {
         StructList.Builder<Person.PhoneNumber.Builder> alicePhones = alice.initPhones(1);
         alicePhones.get(0).setNumber("555-1212");
         alicePhones.get(0).setType(Person.PhoneNumber.Type.MOBILE);
-        alice.getEmployment().setSchool("MIT");
+        //alice.getEmployment().setSchool("MIT");
 
-        Person.Builder bob = people.get(1);
-        bob.setId(456);
-        bob.setName("Bob");
-        bob.setEmail("bob@example.com");
-        StructList.Builder<Person.PhoneNumber.Builder> bobPhones = bob.initPhones(2);
-        bobPhones.get(0).setNumber("555-4567");
-        bobPhones.get(0).setType(Person.PhoneNumber.Type.HOME);
-        bobPhones.get(1).setNumber("555-7654");
-        bobPhones.get(1).setType(Person.PhoneNumber.Type.WORK);
-        bob.getEmployment().setUnemployed(org.capnproto.Void.VOID);
+        // Person.Builder bob = people.get(1);
+        // bob.setId(456);
+        // bob.setName("Bob");
+        // bob.setEmail("bob@example.com");
+        // StructList.Builder<Person.PhoneNumber.Builder> bobPhones = bob.initPhones(2);
+        // bobPhones.get(0).setNumber("555-4567");
+        // bobPhones.get(0).setType(Person.PhoneNumber.Type.HOME);
+        // bobPhones.get(1).setNumber("555-7654");
+        // bobPhones.get(1).setType(Person.PhoneNumber.Type.WORK);
+        // bob.getEmployment().setUnemployed(org.capnproto.Void.VOID);
 
         // org.capnproto.SerializePacked.writeToUnbuffered(
         //     (new FileOutputStream(FileDescriptor.out)).getChannel(),
@@ -126,7 +126,9 @@ public class AddressbookMain {
             if (args.length < 1) {
                 usage();
             } else if (args[0].equals("write")) {
+                long t = System.currentTimeMillis();
                 writeAddressBook();
+                System.out.println("Time required to encode : " + (System.currentTimeMillis() - t));
             } else if (args[0].equals("read")) {
                 printAddressBook();
             } else {
